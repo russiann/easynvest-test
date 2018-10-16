@@ -1,0 +1,16 @@
+{
+  "name": "russiann-easinvest-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Russian Rebouças <russian.reboucas@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "dependencies": {
+    "parcel": "^1.10.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2"
+  }
+}
