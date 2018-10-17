@@ -32,7 +32,10 @@ class Contacts {
 
   create(data) {
     const collection = this.find();
-    storage.set('contacts', collection.concat([data]));
+    storage.set('contacts', collection.concat([{
+      id: generateHash(),
+      ...data
+    }]));
   }
 
   patch(id, data) {

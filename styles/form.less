@@ -1,0 +1,71 @@
+.form {
+  width: 100%;
+  &__input-container {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  &__input {
+    color: #212121;
+    background-color: transparent;
+    width: 100%;
+    padding: 8px 2px;
+    border: none;
+    border-bottom: 1px solid #969696;
+    box-sizing: border-box;
+    font-size: 15px;
+    outline: none;
+  }
+  &__label {
+    color: #969696;
+    padding-left: 2px;
+    font-size: 12px;
+  }
+}
+
+.button {
+  width: 100%;
+  background: #00c8b3;
+  color: #fff;
+  text-align: center;
+  line-height: 45px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.spinner {
+  animation: rotate 2s linear infinite;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  
+  & .path {
+    stroke: hsl(210, 70, 75);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+  }
+  
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
