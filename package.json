@@ -5,7 +5,7 @@
   "author": "Russian Rebouças <russian.reboucas@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "parcel *.html",
     "test": "mocha --require mock-local-storage --require @babel/register --colors ./tests/*.spec.js",
     "test:watch": "mocha --require mock-local-storage --require @babel/register --colors -w ./tests/*.spec.js"
   },
