@@ -4,16 +4,19 @@ import bindClickEvents from '../helpers/bindClickEvents';
 
 contacts.initialize()
   .then(() => {
-    const items = contacts.list();
+    const items = contacts.find();
 
     const events = {
-      editContact: () => console.log('redirect to edit page ✈')
+      editContact: (ev, el) => {
+        const id = el.attributes.getNamedItem('id').value;
+        document.location.href = `/contact.html?id=${id}`;
+      }
     };
 
     const list = render('.list', `
       <ul class="list">
         ${items.map(item => `
-          <li bindclick="editContact" class="list-item">
+          <li id="${item.id}" bindclick="editContact" class="list-item">
             <div class="list-item__cpf">CPF: ${item.cpf}</div>
             <div class="list-item__name">${item.name}</div>
             <div class="list-item__email">${item.email}</div>

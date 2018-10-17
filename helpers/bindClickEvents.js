@@ -7,7 +7,7 @@ const bindClickEvents = (query, handlers) => {
       .filter(attr => attr.name === 'bindclick')
       .forEach(attr => {
         if (handlers[attr.value]) {
-          el.addEventListener('click', handlers[attr.value]);
+          el.addEventListener('click', (ev) => handlers[attr.value](ev, el));
         }
       })
   });
