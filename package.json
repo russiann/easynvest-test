@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel *.html",
+    "build": "parcel build *.html -d build/output",
     "test": "cypress open"
   },
   "devDependencies": {
