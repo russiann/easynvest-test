@@ -1,5 +1,11 @@
 import { render as renderElement } from './utils';
-import bindClickEvents from './bindClickEvents'
+import bindEvents from './bindEvents'
+
+const triggers = [
+  { triggerName: 'bindclick',  event: 'click' },
+  { triggerName: 'bindinput',  event: 'input' },
+  { triggerName: 'bindchange', event: 'change' },
+];
 
 const createComponent = (setup) => {
 
@@ -8,14 +14,14 @@ const createComponent = (setup) => {
   const setState = (reducer) => {
     localState = reducer(localState)
     renderElement(el, render(localState));
-    bindClickEvents(el, events);
+    bindEvents(el, events, triggers);
   };
 
   const { el, state, events = {}, render } = setup(setState);
   localState = state;
 
   renderElement(el, render(localState));
-  bindClickEvents(el, events);
+  bindEvents(el, events, triggers);
 }
 
 export default createComponent;
