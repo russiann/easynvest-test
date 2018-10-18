@@ -3,7 +3,7 @@ import { generateHash } from '../helpers/utils';
 
 const API_ENDPOINT = 'https://private-21e8de-rafaellucio.apiary-mock.com/users';
 
-class Contacts {
+const contacts = {
 
   initialize() {
     const isAlreadyFetched = storage.get('isAlreadyFetched');
@@ -19,16 +19,16 @@ class Contacts {
             storage.set('contacts', contacts);
             storage.set('isAlreadyFetched', true)
           });
-  }
+  },
 
   find() {
     return storage.get('contacts') || [];
-  }
+  },
 
   get(id) {
     const collection = this.find();
     return collection.find(item => item.id === id);
-  }
+  },
 
   create(data) {
     const collection = this.find();
@@ -36,7 +36,7 @@ class Contacts {
       id: generateHash(),
       ...data
     }]));
-  }
+  },
 
   patch(id, data) {
     const collection = this.find();
@@ -51,7 +51,7 @@ class Contacts {
     );
 
     return result;
-  }
+  },
 
   remove(id) {
     const collection = this.find();
@@ -62,4 +62,4 @@ class Contacts {
 
 }
 
-export default new Contacts();
+export default contacts;
