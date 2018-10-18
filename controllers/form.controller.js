@@ -1,6 +1,7 @@
 import contacts from '../models/contacts.model';
 import { render, getParameterByName, getFormValues, iff } from '../helpers/utils';
 import bindClickEvents from '../helpers/bindClickEvents';
+import createComponent from '../helpers/createComponent';
 
 const renderSpinner = () => `
   <svg class="spinner" viewBox="0 0 50 50">
@@ -15,7 +16,7 @@ const renderInput = ({label, name, value}) => `
   </div>
 `;
 
-const renderContactForm = ({id, name, cpf, email, phone}) => `
+const renderContactForm = ({id, name, cpf, email, phone}, submiting) => `
   <form id="contact-form" class="form">
     ${renderInput({ name: 'name', label: 'Nome completo (sem abreviações)', value: name })}
     ${renderInput({ name: 'email', label: 'E-mail', value: email })}
@@ -23,9 +24,11 @@ const renderContactForm = ({id, name, cpf, email, phone}) => `
     ${renderInput({ name: 'phone', label: 'Phone', value: phone })}
 
     <div class="button" bindclick="submitForm">
-      ${renderSpinner()}
+      ${submiting
+        ? renderSpinner()
+        : id ? 'Salvar' : 'Cadastrar'
+      }
     </div>
-    <div class="button" bindclick="submitForm">${id ? 'Salvar' : 'Cadastrar'}</div>
   </form>
 `;
 
@@ -47,26 +50,41 @@ contacts.initialize()
       phone: ''
     };
 
-    const events = {
-      submitForm: () => {
-        const values = getFormValues('#contact-form');
-        
-        (contact)
-          ? contacts.patch(contact.id, values)
-          : contacts.create(values);
-        
-        document.location.href = '/index.html';
-      }
+    const actions = {
+      toggleSubmiting: (state) => ({ ...state, submiting: !state.submiting }),
+      updateForm: (values) => (state) => ({...state, form: { ...state.form, ...values}})
     };
 
-    render('.contact-page', `
-      <div>
-        ${(id && !contact)
-          ? renderEmpty()
-          : renderContactForm(contact || initialFormValues)
-        }
-      </div>
-    `);
+    createComponent((setState) => ({
+      el: '.contact-page',
+      state: {
+        form: contact || initialFormValues,
+        submiting: false
+      },
+      events: {
+        submitForm: () => {
+          const values = getFormValues('#contact-form');
+        
+          setState(actions.updateForm(values));
+          setState(actions.toggleSubmiting);
 
-    bindClickEvents('.contact-page', events);
+          (contact)
+            ? contacts.patch(contact.id, values)
+            : contacts.create(values);
+
+          setTimeout(() => {
+            setState(actions.toggleSubmiting);
+            document.location.href = '/index.html';
+          }, 2000);
+        }
+      },
+      render: ({ submiting, form }) => `
+        <div>
+          ${(id && !contact)
+            ? renderEmpty()
+            : renderContactForm(form, submiting)
+          }
+        </div>
+      `
+    }))
   });
