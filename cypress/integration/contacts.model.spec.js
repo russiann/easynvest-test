@@ -1,46 +1,27 @@
-/* global describe, it, before */
-import chai from 'chai';
-
-import storage from '../helpers/storage';
-import contacts from '../models/contacts.model';
-
-chai.expect();
-const expect = chai.expect;
+import storage from '../../helpers/storage';
+import contacts from '../../models/contacts.model';
 
 const fakeItems = [
-  {
-    "name": "My name 1",
-    "cpf": "04080757247",
-    "phone": "11987654321",
-    "email": "myemail1@test.com.br"
-  },
-  {
-    "name": "My name 2",
-    "cpf": "77797584192",
-    "phone": "11987654321",
-    "email": "myemail2@test.com.br"
-  },
-  {
-    "name": "My name 3",
-    "cpf": "45486737688",
-    "phone": "11987654321",
-    "email": "myemail3@test.com.br"
-  }
+  { "text": "Lorem ipsum" },
+  { "text": "Dolor sit" },
+  { "text": "Amet consectetur" }
 ];
 
 describe('Contacts Model', () => {
 
-  before(() => {
-    storage.set('contacts', []);
+  beforeEach(() => {
+    storage.set('contacts', fakeItems);
   });
 
   it('should create contacts', () => {
-    fakeItems.forEach(item => contacts.create(item));
-    expect(storage.get('contacts')).to.be.deep.equal(fakeItems);
+    const item = contacts.create({ text: "sample text" });
+    const storedItem = storage.get('contacts').find(({id}) => id === item.id);
+    expect(storedItem).to.be.deep.equal(item);
   });
 
   it('should find contacts', () => {
     const items = contacts.find();
+    console.log(storage.get('contacts'), items)
     expect(storage.get('contacts')).to.be.deep.equal(items);
   });
 

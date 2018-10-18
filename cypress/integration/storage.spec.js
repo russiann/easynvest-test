@@ -1,10 +1,4 @@
-/* global describe, it, before */
-import chai from 'chai';
-
-import storage from '../helpers/storage';
-
-chai.expect();
-const expect = chai.expect;
+import storage from '../../helpers/storage';
 
 describe('Storage Helper', () => {
 
@@ -12,7 +6,7 @@ describe('Storage Helper', () => {
     const number = 1994;
     storage.set('number', number);
     const storedNumber = storage.get('number');
-    
+
     expect(storedNumber).to.equal(number);
   });
 
@@ -20,7 +14,7 @@ describe('Storage Helper', () => {
     const string = 'foo bar buzz';
     storage.set('string', string);
     const storedString = storage.get('string');
-    
+
     expect(storedString).to.equal(string);
   });
 
@@ -28,7 +22,7 @@ describe('Storage Helper', () => {
     const obj = { foo: 'bar' };
     storage.set('obj', { foo: 'bar' });
     const storedObj = storage.get('obj');
-    
+
     expect(storedObj).to.deep.equal(obj);
   });
 
