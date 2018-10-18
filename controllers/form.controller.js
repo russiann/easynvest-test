@@ -1,6 +1,5 @@
 import contacts from '../models/contacts.model';
-import { render, getParameterByName, getFormValues, iff } from '../helpers/utils';
-import bindClickEvents from '../helpers/bindClickEvents';
+import { render, getParameterByName, getFormValues, addClass, removeClass } from '../helpers/utils';
 import createComponent from '../helpers/createComponent';
 
 const renderSpinner = () => `
@@ -9,19 +8,27 @@ const renderSpinner = () => `
   </svg>
 `;
 
-const renderInput = ({label, name, value}) => `
+const renderInput = ({label, name, value, pattern, error, required}) => `
   <div class="form__input-container">
     <div class="form__label">${label}</div>
-    <input name="${name}" type="text" value="${value}" class="form__input" />
+    <input name="${name}" type="text" value="${value}" class="form__input"  ${pattern ? `pattern="${pattern}"`: ''} ${required ? 'required': ''} />
+    <div class="form__error">${error}</div>
   </div>
 `;
 
 const renderContactForm = ({id, name, cpf, email, phone}, submiting) => `
-  <form id="contact-form" class="form">
-    ${renderInput({ name: 'name', label: 'Nome completo (sem abreviações)', value: name })}
-    ${renderInput({ name: 'email', label: 'E-mail', value: email })}
-    ${renderInput({ name: 'cpf', label: 'CPF', value: cpf })}
-    ${renderInput({ name: 'phone', label: 'Phone', value: phone })}
+  <form id="contact-form" class="form" bindchange="onFormChange" bindinput="onFormChange">
+    ${renderInput({
+      name: 'name',
+      label: 'Nome completo (sem abreviações)',
+      value: name,
+      pattern: '.{3,}',
+      error: 'Campo deve conter 3 caracteres ou mais',
+      required: true
+    })}
+    ${renderInput({ name: 'email', label: 'E-mail', value: email, required: true, error: 'Campo requirido' })}
+    ${renderInput({ name: 'cpf', label: 'CPF', value: cpf, required: true, error: 'Campo requirido' })}
+    ${renderInput({ name: 'phone', label: 'Phone', value: phone, required: true, error: 'Campo requirido' })}
 
     <div class="button" bindclick="submitForm">
       ${submiting
@@ -63,7 +70,8 @@ contacts.initialize()
       },
       events: {
         submitForm: () => {
-          const values = getFormValues('#contact-form');
+          const { values, valid } = getFormValues('#contact-form');
+          if (!valid) return;
         
           setState(actions.updateForm(values));
           setState(actions.toggleSubmiting);
@@ -76,6 +84,12 @@ contacts.initialize()
             setState(actions.toggleSubmiting);
             document.location.href = '/index.html';
           }, 2000);
+        },
+        onFormChange: () => {
+          const { valid } = getFormValues('#contact-form');
+          (valid)
+            ? removeClass('.button', 'button--disabled')
+            : addClass('.button', 'button--disabled');
         }
       },
       render: ({ submiting, form }) => `

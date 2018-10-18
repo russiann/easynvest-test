@@ -19,9 +19,18 @@ export const getParameterByName = (name) => {
 
 export const getFormValues = (query) => {
   const form = document.querySelector(query);
-  return Array
+
+  const values = Array
     .from(form.elements)
     .reduce((values, input) =>
       ({ ...values, [input.name]: input.value })
     , {});
+
+  return { values, valid: form.checkValidity() }
 };
+
+export const addClass = (query, className) =>
+  document.querySelector(query).classList.add(className);
+
+export const removeClass = (query, className) =>
+  document.querySelector(query).classList.remove(className);

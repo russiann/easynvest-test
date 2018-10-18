@@ -14,11 +14,28 @@
     box-sizing: border-box;
     font-size: 15px;
     outline: none;
+
+    transition: all .1s ease;
+
+    &:invalid {
+      border-bottom: 1px solid #eb4a46;
+    }
+
+    &:invalid + .form__error {
+      visibility: visible;
+    }
   }
   &__label {
     color: #969696;
     padding-left: 2px;
     font-size: 12px;
+  }
+  &__error {
+    color: #eb4a46;
+    padding-left: 2px;
+    font-size: 12px;
+    margin-top: 5px;
+    visibility: hidden;
   }
 }
 
@@ -32,6 +49,18 @@
   border-radius: 30px;
   cursor: pointer;
   margin: 5px 0;
+  transition: all .2s ease;
+
+  &:hover {
+    opacity: .7;
+  }
+
+  &--disabled {
+    background: #f6f6f6;
+    color: #dddcdc;
+    cursor: default;
+  }
+
 }
 
 .spinner {
