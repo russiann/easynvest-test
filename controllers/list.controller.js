@@ -11,6 +11,9 @@ contacts.initialize()
         editContact: (ev, el) => {
           const id = el.attributes.getNamedItem('id').value;
           document.location.href = `/contact.html?id=${id}`;
+        },
+        newContact: () => {
+          document.location.href = '/contact.html';
         }
       },
       render: () => `
@@ -24,6 +27,10 @@ contacts.initialize()
             </li>
           `).join('')}
         </ul>
+
+        <div class="button" bindclick="newContact">
+          Novo Contato
+        </div>
       `
     }));
 
