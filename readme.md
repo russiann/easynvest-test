@@ -25,7 +25,7 @@ Just run this to run test:
 yarn test
 ```
 
-## How this works
+## How it works
 
 ### Core Microframework
 
