@@ -5,8 +5,8 @@
   "author": "Russian Rebouças <russian.reboucas@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "parcel *.html",
-    "build": "parcel build *.html -d build/output",
+    "start": "parcel index.html",
+    "build": "parcel build index.html -d build/output",
     "test": "cypress open"
   },
   "devDependencies": {
