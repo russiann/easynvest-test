@@ -56,7 +56,7 @@ To bind a click just create a handler in events object and set an attribute `bin
 
 ```js
 createComponent(() => ({
-  el: '.list',
+  el: '.app',
   events: {
     greet: () => {
       const input = document.querySelector('input');;
@@ -84,7 +84,7 @@ const actions = {
 };
 
 createComponent(setState => ({
-  el: '.list',
+  el: '.app',
   state: {
     value: 0
   },
